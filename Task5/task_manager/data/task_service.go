@@ -93,6 +93,7 @@ func UpdateTask(id string, updatedTask models.Task) (*models.Task, error) {
 	if !updatedTask.DueDate.IsZero() {
 		updateFields = append(updateFields, bson.E{Key: "due_date", Value: updatedTask.DueDate})
 	}
+	
 
 	update := bson.D{{Key: "$set", Value: updateFields}}
 
