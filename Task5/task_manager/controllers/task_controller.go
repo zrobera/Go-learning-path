@@ -11,7 +11,7 @@ import (
 func GetTasks(c *gin.Context) {
 	tasks, err := data.GetTasks()
 	if err != nil {
-		c.IndentedJSON(http.StatusInternalServerError, err)
+		c.IndentedJSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
 	c.IndentedJSON(http.StatusOK, tasks)
@@ -21,7 +21,7 @@ func GetTaskByID(c *gin.Context) {
 	id := c.Param("id")
 	task, err := data.GetTaskByID(id)
 	if err != nil {
-		c.IndentedJSON(http.StatusInternalServerError, err)
+		c.IndentedJSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
 	if task == nil {
@@ -39,7 +39,7 @@ func CreateTask(c *gin.Context) {
 	}
 	createdTask, err := data.CreateTask(newTask)
 	if err != nil {
-		c.IndentedJSON(http.StatusInternalServerError, gin.H{"error": err})
+		c.IndentedJSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
 	c.IndentedJSON(http.StatusCreated, createdTask)
@@ -54,7 +54,7 @@ func UpdateTask(c *gin.Context) {
 	}
 	task, err := data.UpdateTask(id, updatedTask)
 	if err != nil {
-		c.IndentedJSON(http.StatusInternalServerError, err)
+		c.IndentedJSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
 	if task == nil {
@@ -68,7 +68,7 @@ func DeleteTask(c *gin.Context) {
 	id := c.Param("id")
 	err := data.DeleteTask(id)
 	if err != nil {
-		c.IndentedJSON(http.StatusInternalServerError, err)
+		c.IndentedJSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
 	c.Status(http.StatusNoContent)
