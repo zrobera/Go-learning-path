@@ -3,7 +3,6 @@ package data
 import (
 	"context"
 	"errors"
-	"fmt"
 	"task_manager/models"
 
 	"go.mongodb.org/mongo-driver/bson"
@@ -99,7 +98,6 @@ func UpdateTask(id string, updatedTask models.Task) (*models.Task, error) {
 
 	result := collection.FindOneAndUpdate(context.TODO(), filter, update,options.FindOneAndUpdate().SetReturnDocument(options.After))
 	if result.Err() != nil {
-		fmt.Printf("err : %v", result.Err())
 		return nil, result.Err()
 	}
 
