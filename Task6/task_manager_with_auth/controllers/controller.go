@@ -8,6 +8,39 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+func Register(c *gin.Context) {
+	var user models.User
+
+	if err := c.ShouldBindJSON(&user); err != nil {
+		c.IndentedJSON(400, gin.H{"message": "Invalid input data"})
+		return
+	}
+
+	err := data.CreateUser(user)
+	if err != nil{
+		c.IndentedJSON(500, gin.H{"error": err.Error()})
+		return
+	}
+
+	c.IndentedJSON(200, gin.H{"message": "user registered successfully"})
+}
+
+func Login(c *gin.Context) {
+	var user models.User
+	if err := c.ShouldBindJSON(&user); err != nil {
+		c.JSON(400, gin.H{"error": "Invalid input data"})
+		return
+	}
+
+	token, err := data.Login(user)
+	if err != nil {
+		c.IndentedJSON(401, gin.H{"error": err.Error()})
+		return
+	}
+
+	c.IndentedJSON(200, gin.H{"message": "User logged in successfully", "token": token})
+}
+
 func GetTasks(c *gin.Context) {
 	tasks, err := data.GetTasks()
 	if err != nil {
@@ -21,7 +54,7 @@ func GetTaskByID(c *gin.Context) {
 	id := c.Param("id")
 	task, err := data.GetTaskByID(id)
 	if err != nil {
-		if err.Error() == "mongo: no documents in result" {
+		if err.Error() ==  "mongo: no documents in result" {
 			c.IndentedJSON(404, gin.H{"error": "Task not found"})	
 		}else {
 			c.IndentedJSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
@@ -73,4 +106,20 @@ func DeleteTask(c *gin.Context) {
 		return
 	}
 	c.Status(http.StatusNoContent)
+}
+
+func PromoteUser(c *gin.Context) {
+	username := c.Param("username")
+
+	_, err := data.PromoteUser(username)
+	if err != nil {
+		if err.Error() == "user not found" {
+			c.IndentedJSON(http.StatusNotFound, gin.H{"error": "User not found"})
+		} else {
+			c.IndentedJSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		}
+		return
+	}
+
+	c.IndentedJSON(http.StatusOK, gin.H{"message": "User promoted successfully"})
 }
