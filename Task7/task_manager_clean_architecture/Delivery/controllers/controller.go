@@ -26,6 +26,10 @@ func (u *UserController) Register(c *gin.Context) {
 
 	err := u.UserUseCase.CreateUser(c, user)
 	if err != nil {
+		if err.Error() == "password length must be greater than 4" {
+			c.IndentedJSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+			return
+		}
 		c.IndentedJSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
@@ -42,6 +46,10 @@ func (u *UserController) Login(c *gin.Context) {
 
 	token, err := u.UserUseCase.Login(c, user)
 	if err != nil {
+		if err.Error() == "password length must be greater than 4" {
+			c.IndentedJSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+			return
+		}
 		c.IndentedJSON(http.StatusUnauthorized, gin.H{"error": err.Error()})
 		return
 	}
@@ -52,7 +60,7 @@ func (u *UserController) Login(c *gin.Context) {
 func (u *UserController) PromoteUser(c *gin.Context) {
 	username := c.Param("username")
 
-	_, err := u.UserUseCase.PromoteUser(c,username)
+	_, err := u.UserUseCase.PromoteUser(c, username)
 	if err != nil {
 		if err.Error() == "user not found" {
 			c.IndentedJSON(http.StatusNotFound, gin.H{"error": "User not found"})
@@ -64,7 +72,6 @@ func (u *UserController) PromoteUser(c *gin.Context) {
 
 	c.IndentedJSON(http.StatusOK, gin.H{"message": "User promoted successfully"})
 }
-
 
 // task controllers
 func (t *TaskController) GetTasks(c *gin.Context) {
@@ -96,7 +103,7 @@ func (t *TaskController) CreateTask(c *gin.Context) {
 		c.IndentedJSON(http.StatusBadRequest, gin.H{"error": "Invalid input data"})
 		return
 	}
-	createdTask, err := t.TaskUseCase.CreateTask(c,newTask)
+	createdTask, err := t.TaskUseCase.CreateTask(c, newTask)
 	if err != nil {
 		c.IndentedJSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
@@ -111,7 +118,7 @@ func (t *TaskController) UpdateTask(c *gin.Context) {
 		c.IndentedJSON(http.StatusBadRequest, gin.H{"error": "Invalid input data"})
 		return
 	}
-	task, err := t.TaskUseCase.UpdateTask(c,id, updatedTask)
+	task, err := t.TaskUseCase.UpdateTask(c, id, updatedTask)
 	if err != nil {
 		if err.Error() == "mongo: no documents in result" {
 			c.IndentedJSON(404, gin.H{"error": "Task not found"})
@@ -126,7 +133,7 @@ func (t *TaskController) UpdateTask(c *gin.Context) {
 
 func (t *TaskController) DeleteTask(c *gin.Context) {
 	id := c.Param("id")
-	err := t.TaskUseCase.DeleteTask(c,id)
+	err := t.TaskUseCase.DeleteTask(c, id)
 	if err != nil {
 		c.IndentedJSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return

@@ -18,6 +18,10 @@ func Register(c *gin.Context) {
 
 	err := data.CreateUser(user)
 	if err != nil{
+		if err.Error() == "password length must be greater than 4" {
+			c.IndentedJSON(400, gin.H{"error": err.Error()})
+			return
+		}
 		c.IndentedJSON(500, gin.H{"error": err.Error()})
 		return
 	}
@@ -34,6 +38,10 @@ func Login(c *gin.Context) {
 
 	token, err := data.Login(user)
 	if err != nil {
+		if err.Error() == "password length must be greater than 4" {
+			c.IndentedJSON(400, gin.H{"error": err.Error()})
+			return
+		}
 		c.IndentedJSON(401, gin.H{"error": err.Error()})
 		return
 	}
