@@ -275,12 +275,12 @@ The project is organized into distinct folders, each representing a different la
 
 1. **Clone the Repository**:
     ```sh
-    git clone https://github.com/yourusername/Go-learning-path.git
+    git clone https://github.com/zrobera/Go-learning-path.git
     ```
    
 2. **Navigate to the Project Directory**:
     ```sh
-    cd Go-learning-path/Task5/task_manager_with_auth
+    cd Go-learning-path/Task7/task_manager_with_clean_architecture
     ```
 
 3. **Start the Server**: 

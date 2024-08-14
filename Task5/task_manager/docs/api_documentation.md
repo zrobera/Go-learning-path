@@ -145,12 +145,22 @@ The Task Management API provides endpoints for managing tasks, including creatin
 
 ## How to Use
 
-1. **Start the Server**: Ensure you have Go installed. Run the server using the following command:
+1. **Clone the Repository**:
+    ```sh
+    git clone https://github.com/zrobera/Go-learning-path.git
+    ```
+   
+2. **Navigate to the Project Directory**:
+    ```sh
+    cd Go-learning-path/Task5/task_manager
+    ```
+
+3. **Start the Server**: 
     ```sh
     go run main.go
     ```
 
-2. **Test Endpoints**: Use Postman or curl to test the API endpoints. For example, to get all tasks:
+4. **Test Endpoints**: Use Postman or curl to test the API endpoints. For example, to get all tasks:
     ```sh
     curl -X GET http://localhost:8080/tasks
     ```

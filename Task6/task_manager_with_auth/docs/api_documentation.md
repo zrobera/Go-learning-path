@@ -230,7 +230,7 @@ JWT_SECRET=your_jwt_secret_key
    
 2. **Navigate to the Project Directory**:
     ```sh
-    cd Go-learning-path/Task5/task_manager_with_auth
+    cd Go-learning-path/Task6/task_manager_with_auth
     ```
 
 3. **Start the Server**: 
