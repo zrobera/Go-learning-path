@@ -297,6 +297,21 @@ The project is organized into distinct folders, each representing a different la
 
 6. **Error Handling**: The API handles various error scenarios, returning appropriate HTTP status codes and messages.
 
+## Testing Process for Task Management API
+
+This document outlines the testing process for the Task Management API, including details on the unit test suite, coverage metrics, and automation setup.
+
+## Test Suite Overview
+
+The Task Management API is designed with a focus on maintainability and testability. The test suite includes unit tests across the various components of the application, ensuring that individual units of code function as expected. The tests cover key areas such as controllers, use cases, and repositories.
+
+### Running Tests
+
+To run the tests, use the following command in the project root:
+
+```sh
+go test ./... -cover
+
 ## Conclusion
 
 This API provides basic CRUD functionality for managing tasks. It integrates with MongoDB for data persistence and includes JWT-based authentication. Future enhancements may include additional features and optimizations.
