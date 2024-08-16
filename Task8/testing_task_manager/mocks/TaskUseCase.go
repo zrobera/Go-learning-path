@@ -23,7 +23,7 @@ func (_m *TaskUseCase) EXPECT() *TaskUseCase_Expecter {
 }
 
 // CreateTask provides a mock function with given fields: c, newTask
-func (_m *TaskUseCase) CreateTask(c context.Context, newTask domain.Task) (*domain.Task, error) {
+func (_m *TaskUseCase) CreateTask(c interface{}, newTask domain.Task) (*domain.Task, error) {
 	ret := _m.Called(c, newTask)
 
 	if len(ret) == 0 {
@@ -32,10 +32,10 @@ func (_m *TaskUseCase) CreateTask(c context.Context, newTask domain.Task) (*doma
 
 	var r0 *domain.Task
 	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, domain.Task) (*domain.Task, error)); ok {
+	if rf, ok := ret.Get(0).(func(interface{}, domain.Task) (*domain.Task, error)); ok {
 		return rf(c, newTask)
 	}
-	if rf, ok := ret.Get(0).(func(context.Context, domain.Task) *domain.Task); ok {
+	if rf, ok := ret.Get(0).(func(interface{}, domain.Task) *domain.Task); ok {
 		r0 = rf(c, newTask)
 	} else {
 		if ret.Get(0) != nil {
@@ -43,7 +43,7 @@ func (_m *TaskUseCase) CreateTask(c context.Context, newTask domain.Task) (*doma
 		}
 	}
 
-	if rf, ok := ret.Get(1).(func(context.Context, domain.Task) error); ok {
+	if rf, ok := ret.Get(1).(func(interface{}, domain.Task) error); ok {
 		r1 = rf(c, newTask)
 	} else {
 		r1 = ret.Error(1)
@@ -246,7 +246,7 @@ func (_c *TaskUseCase_GetTasks_Call) RunAndReturn(run func(context.Context) ([]d
 }
 
 // UpdateTask provides a mock function with given fields: c, taskID, updatedTask
-func (_m *TaskUseCase) UpdateTask(c context.Context, taskID string, updatedTask domain.Task) (*domain.Task, error) {
+func (_m *TaskUseCase) UpdateTask(c interface{}, taskID string, updatedTask domain.Task) (*domain.Task, error) {
 	ret := _m.Called(c, taskID, updatedTask)
 
 	if len(ret) == 0 {
@@ -255,10 +255,10 @@ func (_m *TaskUseCase) UpdateTask(c context.Context, taskID string, updatedTask 
 
 	var r0 *domain.Task
 	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, string, domain.Task) (*domain.Task, error)); ok {
+	if rf, ok := ret.Get(0).(func(interface{}, string, domain.Task) (*domain.Task, error)); ok {
 		return rf(c, taskID, updatedTask)
 	}
-	if rf, ok := ret.Get(0).(func(context.Context, string, domain.Task) *domain.Task); ok {
+	if rf, ok := ret.Get(0).(func(interface{}, string, domain.Task) *domain.Task); ok {
 		r0 = rf(c, taskID, updatedTask)
 	} else {
 		if ret.Get(0) != nil {
@@ -266,7 +266,7 @@ func (_m *TaskUseCase) UpdateTask(c context.Context, taskID string, updatedTask 
 		}
 	}
 
-	if rf, ok := ret.Get(1).(func(context.Context, string, domain.Task) error); ok {
+	if rf, ok := ret.Get(1).(func(interface{}, string, domain.Task) error); ok {
 		r1 = rf(c, taskID, updatedTask)
 	} else {
 		r1 = ret.Error(1)
