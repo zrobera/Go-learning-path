@@ -42,15 +42,17 @@ func (a *AuthMiddleware) AuthMiddleware(onlyAdmin bool) gin.HandlerFunc {
 			return
 		}
 
-		role := claims["role"].(string)
-		exp := int64(claims["exp"].(float64))
-
-		if time.Now().Unix() > exp {
-			c.JSON(401, gin.H{"error": "Token expired"})
-			c.Abort()
-			return
+		// Check for expiration if it exists in claims
+		if exp, ok := claims["exp"].(float64); ok {
+			expiration := int64(exp)
+			if time.Now().Unix() > expiration {
+				c.JSON(401, gin.H{"error": "Token expired"})
+				c.Abort()
+				return
+			}
 		}
 		
+		role := claims["role"].(string)
 		if role == "User" && onlyAdmin {
 			c.JSON(403, gin.H{"error": "User role not allowed to access this endpoint"})
 			c.Abort()
