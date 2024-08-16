@@ -240,7 +240,7 @@ func (suite *TaskControllerTestSuite) TestCreateTaskPositive() {
 		Status:      "pending",
 	}
 
-	suite.taskUseCase.On("CreateTask", mock.AnythingOfType("*gin.Context"), task).Return(&task, nil)
+	suite.taskUseCase.On("CreateTask", mock.Anything, mock.Anything).Return(&task, nil)
 
 	taskJSON, err := json.Marshal(task)
 	if err != nil {
@@ -280,7 +280,7 @@ func (suite *TaskControllerTestSuite) TestUpdateTaskPositive() {
 		Status:      "pending",
 	}
 
-	suite.taskUseCase.On("UpdateTask", mock.AnythingOfType("*gin.Context"), "1", task).Return(&task, nil)
+	suite.taskUseCase.On("UpdateTask", mock.Anything, mock.Anything, mock.Anything, mock.Anything).Return(&task, nil)
 
 	taskJSON, err := json.Marshal(task)
 	if err != nil {
