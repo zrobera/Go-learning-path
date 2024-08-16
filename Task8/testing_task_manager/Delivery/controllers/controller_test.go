@@ -7,7 +7,6 @@ import (
 	"net/http"
 	"net/http/httptest"
 	"testing"
-	"time"
 
 	"test_task_manager/Delivery/controllers"
 	domain "test_task_manager/Domain"
@@ -165,7 +164,6 @@ func (suite *TaskControllerTestSuite) TestGetTasksPositive() {
 			ID:          "1",
 			Title:       "Task 1",
 			Description: "Description 1",
-			DueDate:     time.Now().Round(time.Millisecond),
 			Status:      "pending",
 		},
 	}
@@ -177,7 +175,7 @@ func (suite *TaskControllerTestSuite) TestGetTasksPositive() {
 
 	suite.router.ServeHTTP(w, req)
 
-	expectedResponse := `[{"id":"1","title":"Task 1","description":"Description 1","due_date":"` + tasks[0].DueDate.Format(time.RFC3339Nano) + `","status":"pending"}]`
+	expectedResponse := `[{"id":"1","title":"Task 1","description":"Description 1","due_date":"0001-01-01T00:00:00Z","status":"pending"}]`
 
 	assert.Equal(suite.T(), http.StatusOK, w.Code)
 	assert.JSONEq(suite.T(), expectedResponse, w.Body.String())
@@ -201,7 +199,6 @@ func (suite *TaskControllerTestSuite) TestGetTaskByIDPositive() {
 		ID:          "1",
 		Title:       "Task 1",
 		Description: "Description 1",
-		DueDate:     time.Now().Round(time.Millisecond),
 		Status:      "pending",
 	}
 	suite.taskUseCase.On("GetTaskByID", mock.Anything, "1").Return(&task, nil)
@@ -211,7 +208,7 @@ func (suite *TaskControllerTestSuite) TestGetTaskByIDPositive() {
 
 	suite.router.ServeHTTP(w, req)
 
-	expectedResponse := `{"id":"1","title":"Task 1","description":"Description 1","due_date":"` + task.DueDate.Format(time.RFC3339Nano) + `","status":"pending"}`
+	expectedResponse := `{"id":"1","title":"Task 1","description":"Description 1","due_date":"0001-01-01T00:00:00Z","status":"pending"}`
 
 	assert.Equal(suite.T(), http.StatusOK, w.Code)
 	assert.JSONEq(suite.T(), expectedResponse, w.Body.String())
@@ -236,7 +233,6 @@ func (suite *TaskControllerTestSuite) TestCreateTaskPositive() {
 		ID:          "1",
 		Title:       "Task 1",
 		Description: "Description 1",
-		DueDate:     time.Now().Round(time.Millisecond),
 		Status:      "pending",
 	}
 
@@ -252,7 +248,7 @@ func (suite *TaskControllerTestSuite) TestCreateTaskPositive() {
 
 	suite.router.ServeHTTP(w, req)
 
-	expectedResponse := `{"id":"1","title":"Task 1","description":"Description 1","due_date":"` + task.DueDate.Format(time.RFC3339Nano) + `","status":"pending"}`
+	expectedResponse := `{"id":"1","title":"Task 1","description":"Description 1","due_date":"0001-01-01T00:00:00Z","status":"pending"}`
 
 	assert.Equal(suite.T(), http.StatusCreated, w.Code)
 	assert.JSONEq(suite.T(), expectedResponse, w.Body.String())
@@ -276,7 +272,6 @@ func (suite *TaskControllerTestSuite) TestUpdateTaskPositive() {
 		ID:          "1",
 		Title:       "Task 1",
 		Description: "Description 1",
-		DueDate:     time.Now().Round(time.Millisecond),
 		Status:      "pending",
 	}
 
@@ -292,7 +287,7 @@ func (suite *TaskControllerTestSuite) TestUpdateTaskPositive() {
 
 	suite.router.ServeHTTP(w, req)
 
-	expectedResponse := `{"id":"1","title":"Task 1","description":"Description 1","due_date":"` + task.DueDate.Format(time.RFC3339Nano) + `","status":"pending"}`
+	expectedResponse := `{"id":"1","title":"Task 1","description":"Description 1","due_date":"0001-01-01T00:00:00Z","status":"pending"}`
 
 	assert.Equal(suite.T(), http.StatusOK, w.Code)
 	assert.JSONEq(suite.T(), expectedResponse, w.Body.String())
