@@ -32,7 +32,7 @@ jobs:
 
     - name: Run usecase tests
       working-directory: Task8/testing_task_manager
-      run: go test ./Usecases -v
+      run: go test ./UseCases -v
 
     - name: Run controller tests
       working-directory: Task8/testing_task_manager
